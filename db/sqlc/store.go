@@ -8,7 +8,7 @@ import (
 
 type Store interface {
 	Querier
-	TranferTx(ctx context.Context, arg TransferParams) (TranferTxResult, error)
+	TranferTx(ctx context.Context, arg TransferTxParams) (TranferTxResult, error)
 }
 
 type SQLStore struct {
@@ -41,7 +41,7 @@ func (store *SQLStore) execTx(ctx context.Context, fn func(*Queries) error) erro
 	return tx.Commit()
 }
 
-type TransferParams struct {
+type TransferTxParams struct {
 	FromAccountID int64 `json:"from_account_id"`
 	ToAccountID   int64 `json:"to_account_id"`
 	Amount        int64 `json:"amount"`
@@ -55,7 +55,7 @@ type TranferTxResult struct {
 	ToEntry     Entry    `json:"to_entry"`
 }
 
-func (store *SQLStore) TranferTx(ctx context.Context, arg TransferParams) (TranferTxResult, error) {
+func (store *SQLStore) TranferTx(ctx context.Context, arg TransferTxParams) (TranferTxResult, error) {
 	var result TranferTxResult
 
 	err := store.execTx(ctx, func(q *Queries) error {
