@@ -77,7 +77,7 @@ func TestCreateUserAPI(t *testing.T) {
 			},
 		},
 		{
-			name: "InternalServer",
+			name: "InternalError",
 			body: gin.H{
 				"username":  user.Username,
 				"password":  password,
